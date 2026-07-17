@@ -1,0 +1,43 @@
+/* ============================================================
+   THEME TOKENS — Raka & Laras Wedding Invitation
+   Palette: ivory paper, deep sage, muted gold, dusty rose
+   ============================================================ */
+:root{
+  /* Colors */
+  --color-bg:        #FBF7F0;
+  --color-bg-alt:     #F0ECE0;
+  --color-paper:      #FFFDF9;
+  --color-sage:       #4A5D45;
+  --color-sage-dark:  #303D2C;
+  --color-sage-light: #7C8F73;
+  --color-gold:       #B8935F;
+  --color-gold-light: #E4D3B8;
+  --color-rose:       #C9A6A0;
+  --color-ink:        #2B2B26;
+  --color-ink-soft:   #5B584F;
+  --color-white:      #FFFFFF;
+  --color-line:       rgba(74,93,69,0.22);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body:    'Jost', 'Helvetica Neue', sans-serif;
+
+  --fs-eyebrow:   0.72rem;
+  --fs-body:      1rem;
+  --fs-h2:        clamp(2rem, 5vw, 2.8rem);
+  --fs-h1:        clamp(3rem, 10vw, 6rem);
+  --fs-quote:     clamp(1.1rem, 3vw, 1.4rem);
+
+  --tracking-eyebrow: 0.32em;
+
+  /* Spacing / layout */
+  --section-pad-y: clamp(4rem, 10vw, 7rem);
+  --section-pad-x: clamp(1.5rem, 6vw, 3rem);
+  --max-width: 880px;
+  --radius: 2px;
+
+  /* Motion */
+  --ease-soft: cubic-bezier(.22,.61,.36,1);
+  --dur-slow: 900ms;
+  --dur-med: 500ms;
+}

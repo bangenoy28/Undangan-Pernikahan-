@@ -1,0 +1,51 @@
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference){
+
+  .envelope{
+    animation: envelope-rise 1s var(--ease-soft) both;
+  }
+  @keyframes envelope-rise{
+    from{ opacity:0; transform:translateY(24px) scale(.97); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .envelope__seal{
+    animation: seal-appear 700ms var(--ease-soft) 400ms both;
+  }
+  @keyframes seal-appear{
+    from{ opacity:0; transform:scale(0.4) rotate(-25deg); }
+    to{ opacity:1; transform:scale(1) rotate(0deg); }
+  }
+
+  #cover.is-closing .envelope{
+    animation: envelope-open 900ms var(--ease-soft) forwards;
+  }
+  @keyframes envelope-open{
+    to{ opacity:0; transform:translateY(-40px) scale(1.04); }
+  }
+  #cover.is-closing{
+    animation: cover-fade 900ms var(--ease-soft) 250ms forwards;
+  }
+  @keyframes cover-fade{
+    to{ opacity:0; visibility:hidden; }
+  }
+
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity var(--dur-slow) var(--ease-soft), transform var(--dur-slow) var(--ease-soft);
+  }
+  .reveal.is-visible{
+    opacity:1; transform:translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+}
+
+@keyframes pulse{
+  0%,100%{ transform:scale(1); opacity:1; }
+  50%{ transform:scale(1.35); opacity:.6; }
+}
