@@ -1,0 +1,56 @@
+{
+  "couple": {
+    "groom": {
+      "fullName": "Muhamad Zaenal Arifin",
+      "nickname": "Zaenal",
+      "parents": "Putra kedua dari Bapak Ata Suparta & Ibu Herti",
+      "instagram": "@arifinmz.28"
+    },
+    "bride": {
+      "fullName": "Wulan Septiani",
+      "nickname": "Wulan",
+      "parents": "Putri Pertama dari Bapak Herry Wijaya & Ibu Aam",
+      "instagram": "@septtwllaan10"
+    },
+    "quote": "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya."
+  },
+  "event": {
+    "date": "2026-11-14T09:00:00+07:00",
+    "akad": {
+      "label": "Akad Nikah",
+      "time": "09.00 – 11.00 WIB",
+      "place": "Kediaman Mempelai Wanita",
+      "address": "Kp. Buniaga RT.004 RW.002, Tanjung Mekar, Karawang Barat"
+    },
+    "resepsi": {
+      "label": "Resepsi",
+      "time": "18.00 – 21.00 WIB",
+      "place": "Hotel Mercure Karawang",
+      "address": "Jl. Galuhmas Karawang"
+    },
+    "mapsEmbedUrl": "https://www.google.com/maps?q=BSD+City+Tangerang&output=embed"
+  },
+  "gallery": [
+    { "src": "assets/images/gallery-1.jpg", "caption": "Pertemuan pertama, 2025" },
+    { "src": "assets/images/gallery-2.jpg", "caption": "Lamaran, Juli 2026" },
+    { "src": "assets/images/gallery-3.jpg", "caption": "Pre-wedding, Bromo" },
+    { "src": "assets/images/gallery-4.jpg", "caption": "Pre-wedding, Bali" },
+    { "src": "assets/images/gallery-5.jpg", "caption": "Bersama keluarga" },
+    { "src": "assets/images/gallery-6.jpg", "caption": "Menuju hari bahagia" }
+  ],
+  "story": [
+    { "year": "2025", "title": "Perkenalan", "text": "Dipertemukan lewat Orangtua, obrolan singkat berubah menjadi percakapan tanpa henti." },
+    { "year": "2026", "title": "Berkomitmen", "text": "Memutuskan untuk menjalani hubungan serius dan saling mengenal keluarga masing-masing." },
+    { "year": "2026", "title": "Lamaran", "text": "Zaenal melamar Wulam di tempat pertama kali mereka bertemu, disaksikan keluarga terdekat." },
+    { "year": "2027", "title": "Menikah", "text": "Dengan restu kedua orang tua, kami memutuskan untuk melangkah ke jenjang pernikahan." }
+  ],
+  "music": {
+    "src": "assets/music/wedding-theme.mp3",
+    "title": "Perfect - Ed Sheeran (Cover)"
+  },
+  "gift": {
+    "bank": "Mandiri",
+    "accountNumber": "1730007873764",
+    "accountName": "Muhamad Zaenal arifin"
+  }
+}
