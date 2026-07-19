@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Raka &amp; Laras — Undangan Pernikahan</title>
-<meta name="description" content="Undangan pernikahan digital Raka &amp; Laras">
+<title>Zaenal &amp; Wulan — Undangan Pernikahan</title>
+<meta name="description" content="Undangan pernikahan digital Zaenal &amp; Wulan">
 <meta name="theme-color" content="#4A5D45">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="assets/icons/icon-192.png">
@@ -25,15 +25,185 @@
 
   <div class="envelope" id="envelope">
     <div class="envelope__eyebrow">Undangan Pernikahan</div>
-    <h1 class="envelope__names">Raka <span class="envelope__amp">&amp;</span> Laras</h1>
+    <h1 class="envelope__names">Zaenal <span class="envelope__amp">&amp;</span> Wulan</h1>
     <div class="envelope__seal" id="seal" aria-hidden="true">
-      <span class="envelope__seal-initials">R&nbsp;L</span>
+      <span class="envelope__seal-initials">Z&nbsp;W</span>
     </div>
     <p class="envelope__to">Kepada Yth. Bapak/Ibu/Saudara/i</p>
     <p class="envelope__guest" id="guestName">Tamu Undangan</p>
     <button class="btn btn--open" id="openInvitation" type="button">
       <span>Buka Undangan</span>
     </button>
+  </div>
+</section>
+
+<!-- ================= MAIN CONTENT (hidden until opened) ================= -->
+<div id="mainContent" class="main-content" hidden>
+
+  <nav class="nav" id="mainNav" aria-label="Navigasi utama">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__brand">Z &amp; W</a>
+      <button class="nav__music" id="musicToggle" type="button" aria-pressed="false" aria-label="Putar musik">
+        <span class="nav__music-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <p class="eyebrow">Kami Akan Menikah</p>
+    <h1 class="hero__names">Zaenal <em>&amp;</em> Wulan</h1>
+    <p class="hero__date" id="heroDate">14 November 2026</p>
+    <div class="divider" aria-hidden="true"></div>
+    <p class="hero__quote" id="coupleQuote"></p>
+  </section>
+
+  <!-- COUPLE -->
+  <section id="couple" class="couple">
+    <p class="eyebrow">Mempelai</p>
+    <div class="couple__grid">
+      <article class="couple__card">
+        <div class="couple__frame"></div>
+        <h2 class="couple__name" id="groomName">Muhamad Zaenal Arifin</h2>
+        <p class="couple__parents" id="groomParents"></p>
+        <a class="couple__ig" id="groomIg" href="#" target="_blank" rel="noopener">Instagram</a>
+      </article>
+      <div class="couple__amp" aria-hidden="true">&amp;</div>
+      <article class="couple__card">
+        <div class="couple__frame"></div>
+        <h2 class="couple__name" id="brideName">Wulan Septiani</h2>
+        <p class="couple__parents" id="brideParents"></p>
+        <a class="couple__ig" id="brideIg" href="#" target="_blank" rel="noopener">Instagram</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section id="countdown-section" class="countdown-section">
+    <p class="eyebrow">Menuju Hari Bahagia</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown__unit"><span class="countdown__value" id="cd-days">00</span><span class="countdown__label">Hari</span></div>
+      <div class="countdown__unit"><span class="countdown__value" id="cd-hours">00</span><span class="countdown__label">Jam</span></div>
+      <div class="countdown__unit"><span class="countdown__value" id="cd-minutes">00</span><span class="countdown__label">Menit</span></div>
+      <div class="countdown__unit"><span class="countdown__value" id="cd-seconds">00</span><span class="countdown__label">Detik</span></div>
+    </div>
+  </section>
+
+  <!-- EVENT DETAILS -->
+  <section id="acara" class="acara">
+    <p class="eyebrow">Waktu &amp; Tempat</p>
+    <div class="acara__grid">
+      <article class="acara__card">
+        <h3 class="acara__label" id="akadLabel">Akad Nikah</h3>
+        <p class="acara__time" id="akadTime"></p>
+        <p class="acara__place" id="akadPlace"></p>
+        <p class="acara__address" id="akadAddress"></p>
+      </article>
+      <article class="acara__card">
+        <h3 class="acara__label" id="resepsiLabel">Resepsi</h3>
+        <p class="acara__time" id="resepsiTime"></p>
+        <p class="acara__place" id="resepsiPlace"></p>
+        <p class="acara__address" id="resepsiAddress"></p>
+      </article>
+    </div>
+    <div class="acara__map">
+      <iframe id="mapsFrame" title="Lokasi acara" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="acara__actions">
+      <button class="btn btn--ghost" id="addToCalendar" type="button">Simpan ke Kalender</button>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="story" class="story">
+    <p class="eyebrow">Kisah Kami</p>
+    <div class="story__timeline" id="storyTimeline"></div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="gallery">
+    <p class="eyebrow">Galeri</p>
+    <div class="gallery__grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp" class="rsvp">
+    <p class="eyebrow">Konfirmasi Kehadiran</p>
+    <form class="rsvp__form" id="rsvpForm">
+      <label class="field">
+        <span>Nama</span>
+        <input type="text" name="name" id="rsvpName" required placeholder="Nama lengkap">
+      </label>
+      <label class="field">
+        <span>Kehadiran</span>
+        <select name="attendance" id="rsvpAttendance" required>
+          <option value="" disabled selected>Pilih konfirmasi</option>
+          <option value="hadir">Hadir</option>
+          <option value="tidak">Tidak Hadir</option>
+          <option value="ragu">Masih Ragu</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Jumlah Tamu</span>
+        <input type="number" name="guests" id="rsvpGuests" min="1" max="5" value="1">
+      </label>
+      <label class="field field--full">
+        <span>Ucapan &amp; Doa</span>
+        <textarea name="message" id="rsvpMessage" rows="3" placeholder="Tuliskan ucapan dan doa terbaik Anda"></textarea>
+      </label>
+      <button class="btn btn--open field--full" type="submit">Kirim Konfirmasi</button>
+    </form>
+  </section>
+
+  <!-- GUESTBOOK -->
+  <section id="guestbook" class="guestbook">
+    <p class="eyebrow">Ucapan &amp; Doa</p>
+    <div class="guestbook__list" id="guestbookList"></div>
+    <button class="btn btn--ghost" id="loadMoreWishes" type="button" hidden>Muat Lebih Banyak</button>
+  </section>
+
+  <!-- GIFT -->
+  <section id="gift" class="gift">
+    <p class="eyebrow">Tanda Kasih</p>
+    <p class="gift__intro">Doa restu Anda adalah karunia paling berharga bagi kami. Namun jika ingin memberi tanda kasih, kami sediakan:</p>
+    <div class="gift__card">
+      <p class="gift__bank" id="giftBank">BCA</p>
+      <p class="gift__number" id="giftNumber">1234567890</p>
+      <p class="gift__name" id="giftName">a.n. Zaenal Arifin</p>
+      <button class="btn btn--ghost" id="copyGift" type="button">Salin Nomor Rekening</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="divider divider--light" aria-hidden="true"></div>
+    <p class="footer__names">Zaenal &amp; Wulan</p>
+    <p class="footer__note">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
+    <p class="footer__credit">Dibuat dengan cinta · 2026</p>
+  </footer>
+
+  <button class="fab" id="backToTop" type="button" aria-label="Kembali ke atas" hidden>↑</button>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lightbox__close" id="lightboxClose" aria-label="Tutup">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+  <p class="lightbox__caption" id="lightboxCaption"></p>
+</div>
+
+<audio id="bgMusic" loop preload="none"></audio>
+
+<script src="assets/js/app.js" defer></script>
+<script src="assets/js/music.js" defer></script>
+<script src="assets/js/countdown.js" defer></script>
+<script src="assets/js/gallery.js" defer></script>
+<script src="assets/js/rsvp.js" defer></script>
+<script src="assets/js/guestbook.js" defer></script>
+<script src="assets/js/maps.js" defer></script>
+<script src="assets/js/pwa.js" defer></script>
+</body>
+</html>
   </div>
 </section>
 
