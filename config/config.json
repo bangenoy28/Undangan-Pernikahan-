@@ -28,7 +28,7 @@
       "place": "Hotel Mercure Karawang",
       "address": "Jl. Galuhmas Karawang"
     },
-    "mapsEmbedUrl": "https://www.google.com/maps?q=BSD+City+Tangerang&output=embed"
+    "mapsEmbedUrl": "https://www.google.com/maps?q=BSD+"
   },
   "gallery": [
     { "src": "assets/images/gallery-1.jpg", "caption": "Pertemuan pertama, 2025" },
@@ -41,8 +41,8 @@
   "story": [
     { "year": "2025", "title": "Perkenalan", "text": "Dipertemukan lewat Orangtua, obrolan singkat berubah menjadi percakapan tanpa henti." },
     { "year": "2026", "title": "Berkomitmen", "text": "Memutuskan untuk menjalani hubungan serius dan saling mengenal keluarga masing-masing." },
-    { "year": "2026", "title": "Lamaran", "text": "Zaenal melamar Wulam di tempat pertama kali mereka bertemu, disaksikan keluarga terdekat." },
-    { "year": "2027", "title": "Menikah", "text": "Dengan restu kedua orang tua, kami memutuskan untuk melangkah ke jenjang pernikahan." }
+    { "year": "2026", "title": "Lamaran", "text": "Zaenal melamar Wulan di tempat pertama kali mereka bertemu, disaksikan keluarga terdekat." },
+    { "year": "2026", "title": "Menikah", "text": "Dengan restu kedua orang tua, kami memutuskan untuk melangkah ke jenjang pernikahan." }
   ],
   "music": {
     "src": "assets/music/wedding-theme.mp3",
@@ -50,7 +50,7 @@
   },
   "gift": {
     "bank": "Mandiri",
-    "accountNumber": "1730007873764",
+    "accountNumber": "xxxx",
     "accountName": "Muhamad Zaenal arifin"
   }
 }
