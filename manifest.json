@@ -1,15 +1,46 @@
 {
-  "name": "Zaenal & Wulan — Undangan Pernikahan",
+  "name": "Undangan Pernikahan Zaenal & Wulan",
   "short_name": "Zaenal & Wulan",
-  "description": "Undangan pernikahan digital Zaenal & Wulan",
-  "start_url": "./index.html",
+  "description": "Undangan Pernikahan Digital Zaenal & Wulan",
+  "lang": "id-ID",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#FBF7F0",
+  "orientation": "portrait-primary",
+  "background_color": "#F8F5F0",
   "theme_color": "#4A5D45",
+
   "icons": [
-    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "categories": [
+    "lifestyle",
+    "events"
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Buka Undangan",
+      "short_name": "Undangan",
+      "url": "./",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }
