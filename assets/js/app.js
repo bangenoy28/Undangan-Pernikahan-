@@ -1,40 +1,953 @@
-/* ============================================================
-   app.js — bootstraps the invitation: loads config.json,
-   populates content, handles the envelope reveal, nav & UX bits.
-   Other modules (countdown/gallery/rsvp/guestbook/maps) listen
-   for the "wedding:config-ready" event dispatched from here.
-   ============================================================ */
-(function () {
-  "use strict";
+/* ==========================================================
+   app.js
+   Wedding Invitation
+   Part 1/5
+========================================================== */
 
-  window.WEDDING_CONFIG = null;
+(() => {
+"use strict";
 
-  function fireConfigReady(config) {
-    window.WEDDING_CONFIG = config;
-    document.dispatchEvent(new CustomEvent("wedding:config-ready", { detail: config }));
-  }
+/* ==========================================================
+   SELECTOR
+========================================================== */
 
-  async function loadConfig() {
+const $ = (s, p = document) => p.querySelector(s);
+const $$ = (s, p = document) => [...p.querySelectorAll(s)];
+
+/* ==========================================================
+   DOM
+========================================================== */
+
+const cover = $("#cover");
+const mainContent = $("#mainContent");
+const envelope = $("#envelope");
+const openInvitation = $("#openInvitation");
+
+const heroDate = $("#heroDate");
+const coupleQuote = $("#coupleQuote");
+
+const guestName = $("#guestName");
+
+const groomName = $("#groomName");
+const groomParents = $("#groomParents");
+const groomIg = $("#groomIg");
+
+const brideName = $("#brideName");
+const brideParents = $("#brideParents");
+const brideIg = $("#brideIg");
+
+const akadLabel = $("#akadLabel");
+const akadTime = $("#akadTime");
+const akadPlace = $("#akadPlace");
+const akadAddress = $("#akadAddress");
+
+const resepsiLabel = $("#resepsiLabel");
+const resepsiTime = $("#resepsiTime");
+const resepsiPlace = $("#resepsiPlace");
+const resepsiAddress = $("#resepsiAddress");
+
+const mapsFrame = $("#mapsFrame");
+
+const storyTimeline = $("#storyTimeline");
+const galleryGrid = $("#galleryGrid");
+
+const giftBank = $("#giftBank");
+const giftNumber = $("#giftNumber");
+const giftName = $("#giftName");
+
+const copyGift = $("#copyGift");
+const addCalendar = $("#addToCalendar");
+
+const backToTop = $("#backToTop");
+
+const bgMusic = $("#bgMusic");
+
+/* ==========================================================
+   GLOBAL
+========================================================== */
+
+let CONFIG = null;
+
+let invitationOpened = false;
+
+/* ==========================================================
+   HELPER
+========================================================== */
+
+function setText(el, value = "") {
+
+    if (!el) return;
+
+    el.textContent = value;
+
+}
+
+function setLink(el, url = "#") {
+
+    if (!el) return;
+
+    el.href = url;
+
+}
+
+function create(tag, cls = "") {
+
+    const e = document.createElement(tag);
+
+    if (cls) e.className = cls;
+
+    return e;
+
+}
+
+/* ==========================================================
+   FORMAT DATE
+========================================================== */
+
+function formatDate(dateString) {
+
     try {
-      const res = await fetch("config/config.json");
-      if (!res.ok) throw new Error("config.json not found");
-      const config = await res.json();
-      fireConfigReady(config);
-    } catch (err) {
-      console.error("[app.js] Failed to load config.json:", err);
+
+        return new Intl.DateTimeFormat("id-ID", {
+
+            weekday: "long",
+
+            day: "numeric",
+
+            month: "long",
+
+            year: "numeric"
+
+        }).format(new Date(dateString));
+
+    } catch {
+
+        return dateString;
+
     }
-  }
 
-  function getGuestNameFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    const to = params.get("to") || params.get("nama") || params.get("guest");
-    return to ? decodeURIComponent(to.replace(/\+/g, " ")) : null;
-  }
+}
 
-  function formatLongDate(isoString) {
+/* ==========================================================
+   GUEST NAME
+========================================================== */
+
+function loadGuestName() {
+
+    const params = new URLSearchParams(location.search);
+
+    const guest = params.get("to");
+
+    if (!guest) return;
+
+    guestName.textContent = decodeURIComponent(guest);
+
+}
+
+/* ==========================================================
+   LOAD CONFIG
+========================================================== */
+
+async function loadConfig() {
+
     try {
-      const d = new Date(isoString);
-      return d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+
+        const response = await fetch(
+
+            "config/config.json",
+
+            {
+
+                cache: "no-cache"
+
+            }
+
+        );
+
+        if (!response.ok)
+
+            throw new Error("config.json gagal dimuat");
+
+        CONFIG = await response.json();
+
+        populateData();
+
+        document.dispatchEvent(
+
+            new CustomEvent(
+
+                "wedding:config-ready",
+
+                {
+
+                    detail: CONFIG
+
+                }
+
+            )
+
+        );
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("Tidak dapat memuat data undangan.");
+
+    }
+
+}
+/* ==========================================================
+   POPULATE DATA
+========================================================== */
+
+function populateData() {
+
+    if (!CONFIG) return;
+
+    /* ================= HERO ================= */
+
+    setText(
+        heroDate,
+        formatDate(CONFIG.event.date)
+    );
+
+    setText(
+        coupleQuote,
+        CONFIG.couple.quote
+    );
+
+    /* ================= GROOM ================= */
+
+    setText(
+        groomName,
+        CONFIG.couple.groom.fullName
+    );
+
+    setText(
+        groomParents,
+        CONFIG.couple.groom.parents
+    );
+
+    setLink(
+        groomIg,
+        "https://instagram.com/" +
+        CONFIG.couple.groom.instagram.replace("@","")
+    );
+
+    /* ================= BRIDE ================= */
+
+    setText(
+        brideName,
+        CONFIG.couple.bride.fullName
+    );
+
+    setText(
+        brideParents,
+        CONFIG.couple.bride.parents
+    );
+
+    setLink(
+        brideIg,
+        "https://instagram.com/" +
+        CONFIG.couple.bride.instagram.replace("@","")
+    );
+
+    /* ================= EVENT ================= */
+
+    setText(akadLabel, CONFIG.event.akad.label);
+    setText(akadTime, CONFIG.event.akad.time);
+    setText(akadPlace, CONFIG.event.akad.place);
+    setText(akadAddress, CONFIG.event.akad.address);
+
+    setText(resepsiLabel, CONFIG.event.resepsi.label);
+    setText(resepsiTime, CONFIG.event.resepsi.time);
+    setText(resepsiPlace, CONFIG.event.resepsi.place);
+    setText(resepsiAddress, CONFIG.event.resepsi.address);
+
+    /* ================= MAP ================= */
+
+    if (mapsFrame) {
+
+        mapsFrame.src =
+            CONFIG.event.mapsEmbedUrl;
+
+    }
+
+    /* ================= MUSIC ================= */
+
+    if (bgMusic && CONFIG.music) {
+
+        bgMusic.src =
+            CONFIG.music.src;
+
+    }
+
+    /* ================= GIFT ================= */
+
+    setText(
+        giftBank,
+        CONFIG.gift.bank
+    );
+
+    setText(
+        giftNumber,
+        CONFIG.gift.accountNumber
+    );
+
+    setText(
+        giftName,
+        CONFIG.gift.accountName
+    );
+
+    /* ================= STORY ================= */
+
+    renderStory();
+
+    /* ================= GALLERY ================= */
+
+    renderGallery();
+
+}
+
+/* ==========================================================
+   STORY
+========================================================== */
+
+function renderStory() {
+
+    if (!storyTimeline) return;
+
+    storyTimeline.innerHTML = "";
+
+    CONFIG.story.forEach(item => {
+
+        const card = create(
+            "article",
+            "story__item reveal"
+        );
+
+        card.innerHTML = `
+
+        <div class="story__year">
+            ${item.year}
+        </div>
+
+        <h3 class="story__title">
+            ${item.title}
+        </h3>
+
+        <p class="story__text">
+            ${item.text}
+        </p>
+
+        `;
+
+        storyTimeline.appendChild(card);
+
+    });
+
+}
+
+/* ==========================================================
+   GALLERY
+========================================================== */
+
+function renderGallery() {
+
+    if (!galleryGrid) return;
+
+    galleryGrid.innerHTML = "";
+
+    CONFIG.gallery.forEach((photo,index)=>{
+
+        const item = create(
+            "div",
+            "gallery__item reveal"
+        );
+
+        item.innerHTML = `
+
+        <img
+            src="${photo.src}"
+            alt="${photo.caption}"
+            loading="lazy"
+            data-index="${index}"
+            data-caption="${photo.caption}">
+
+        `;
+
+        galleryGrid.appendChild(item);
+
+    });
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+
+            "gallery:loaded",
+
+            {
+
+                detail: CONFIG.gallery
+
+            }
+
+        )
+
+    );
+
+}
+/* ==========================================================
+   OPEN INVITATION
+========================================================== */
+
+function openInvitationHandler() {
+
+    if (invitationOpened) return;
+
+    invitationOpened = true;
+
+    openInvitation.disabled = true;
+
+    document.body.classList.add("is-loading");
+
+    /* Animasi amplop */
+
+    envelope.classList.add("is-opening");
+
+    setTimeout(() => {
+
+        cover.classList.add("fade-out");
+
+    }, 500);
+
+    setTimeout(() => {
+
+        cover.hidden = true;
+
+        mainContent.hidden = false;
+
+        document.body.classList.remove("is-loading");
+
+        requestAnimationFrame(() => {
+
+            window.scrollTo({
+
+                top: 0,
+
+                behavior: "smooth"
+
+            });
+
+        });
+
+        /* Event untuk modul lain */
+
+        document.dispatchEvent(
+
+            new CustomEvent(
+
+                "wedding:invitation-opened",
+
+                {
+
+                    detail: CONFIG
+
+                }
+
+            )
+
+        );
+
+    }, 1000);
+
+}
+
+/* ==========================================================
+   COPY GIFT
+========================================================== */
+
+async function copyGiftNumber() {
+
+    if (!CONFIG) return;
+
+    try {
+
+        await navigator.clipboard.writeText(
+
+            CONFIG.gift.accountNumber
+
+        );
+
+        copyGift.textContent =
+
+            "Berhasil Disalin";
+
+        setTimeout(() => {
+
+            copyGift.textContent =
+
+                "Salin Nomor Rekening";
+
+        }, 2000);
+
+    } catch {
+
+        alert(
+
+            "Nomor rekening:\n\n" +
+
+            CONFIG.gift.accountNumber
+
+        );
+
+    }
+
+}
+
+/* ==========================================================
+   CALENDAR
+========================================================== */
+
+function addToCalendarHandler() {
+
+    if (!CONFIG) return;
+
+    const start =
+
+        new Date(CONFIG.event.date);
+
+    const end =
+
+        new Date(
+
+            start.getTime() +
+
+            (3 * 60 * 60 * 1000)
+
+        );
+
+    const format = date =>
+
+        date.toISOString()
+
+        .replace(/[-:]/g,"")
+
+        .split(".")[0] + "Z";
+
+    const url =
+
+        "https://calendar.google.com/calendar/render?action=TEMPLATE"
+
+        + "&text="
+
+        + encodeURIComponent(
+
+            CONFIG.couple.groom.nickname +
+
+            " & " +
+
+            CONFIG.couple.bride.nickname
+
+        )
+
+        + "&dates="
+
+        + format(start)
+
+        + "/"
+
+        + format(end)
+
+        + "&location="
+
+        + encodeURIComponent(
+
+            CONFIG.event.resepsi.place
+
+        );
+
+    window.open(
+
+        url,
+
+        "_blank"
+
+    );
+
+}
+
+/* ==========================================================
+   BACK TO TOP
+========================================================== */
+
+function handleScroll() {
+
+    if (
+
+        window.scrollY >
+
+        400
+
+    ) {
+
+        backToTop.hidden = false;
+
+    } else {
+
+        backToTop.hidden = true;
+
+    }
+
+}
+
+function scrollTopHandler() {
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+/* ==========================================================
+   REVEAL ANIMATION
+========================================================== */
+
+let revealObserver = null;
+
+function initRevealAnimation() {
+
+    if (!("IntersectionObserver" in window)) {
+
+        $$(".reveal").forEach(el => {
+
+            el.classList.add("show");
+
+        });
+
+        return;
+
+    }
+
+    revealObserver = new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (!entry.isIntersecting) return;
+
+                entry.target.classList.add("show");
+
+                revealObserver.unobserve(entry.target);
+
+            });
+
+        },
+
+        {
+            threshold: 0.15,
+            rootMargin: "0px 0px -60px 0px"
+        }
+
+    );
+
+    $$(".reveal").forEach(el => {
+
+        revealObserver.observe(el);
+
+    });
+
+}
+
+/* ==========================================================
+   NAVBAR
+========================================================== */
+
+const nav = $("#mainNav");
+
+function updateNavbar() {
+
+    if (!nav) return;
+
+    if (window.scrollY > 40) {
+
+        nav.classList.add("nav--scrolled");
+
+    } else {
+
+        nav.classList.remove("nav--scrolled");
+
+    }
+
+}
+
+/* ==========================================================
+   REFRESH REVEAL
+========================================================== */
+
+function refreshReveal() {
+
+    if (!revealObserver) {
+
+        initRevealAnimation();
+
+        return;
+
+    }
+
+    $$(".reveal").forEach(el => {
+
+        if (!el.classList.contains("show")) {
+
+            revealObserver.observe(el);
+
+        }
+
+    });
+
+}
+
+/* ==========================================================
+   EVENT LISTENER
+========================================================== */
+
+function registerEvents() {
+
+    if (openInvitation) {
+
+        openInvitation.addEventListener(
+
+            "click",
+
+            openInvitationHandler
+
+        );
+
+    }
+
+    if (copyGift) {
+
+        copyGift.addEventListener(
+
+            "click",
+
+            copyGiftNumber
+
+        );
+
+    }
+
+    if (addCalendar) {
+
+        addCalendar.addEventListener(
+
+            "click",
+
+            addToCalendarHandler
+
+        );
+
+    }
+
+    if (backToTop) {
+
+        backToTop.addEventListener(
+
+            "click",
+
+            scrollTopHandler
+
+        );
+
+    }
+
+    window.addEventListener(
+
+        "scroll",
+
+        () => {
+
+            handleScroll();
+
+            updateNavbar();
+
+        },
+
+        {
+
+            passive: true
+
+        }
+
+    );
+
+}
+
+/* ==========================================================
+   CUSTOM EVENT
+========================================================== */
+
+document.addEventListener(
+
+    "gallery:loaded",
+
+    () => {
+
+        refreshReveal();
+
+    }
+
+);
+
+document.addEventListener(
+
+    "wedding:config-ready",
+
+    () => {
+
+        refreshReveal();
+
+    }
+
+);
+/* ==========================================================
+   INITIALIZATION
+========================================================== */
+
+function init() {
+
+    /* Nama tamu dari URL */
+    loadGuestName();
+
+    /* Daftarkan semua event */
+    registerEvents();
+
+    /* Reveal awal */
+    initRevealAnimation();
+
+    /* Load konfigurasi */
+    loadConfig();
+
+    /* Posisi awal */
+    handleScroll();
+
+    updateNavbar();
+
+}
+
+/* ==========================================================
+   DOM READY
+========================================================== */
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+
+        "DOMContentLoaded",
+
+        init
+
+    );
+
+} else {
+
+    init();
+
+}
+
+/* ==========================================================
+   PUBLIC EVENT
+========================================================== */
+
+/*
+    Event yang tersedia untuk modul lain
+
+    wedding:config-ready
+    wedding:invitation-opened
+    gallery:loaded
+
+*/
+
+/* ==========================================================
+   SAFETY
+========================================================== */
+
+window.addEventListener(
+
+    "pageshow",
+
+    () => {
+
+        handleScroll();
+
+        updateNavbar();
+
+    }
+
+);
+
+window.addEventListener(
+
+    "resize",
+
+    () => {
+
+        refreshReveal();
+
+    }
+
+);
+
+/* ==========================================================
+   ERROR HANDLER
+========================================================== */
+
+window.addEventListener(
+
+    "error",
+
+    event => {
+
+        console.error(
+
+            "[Wedding]",
+
+            event.message
+
+        );
+
+    }
+
+);
+
+window.addEventListener(
+
+    "unhandledrejection",
+
+    event => {
+
+        console.error(
+
+            "[Wedding]",
+
+            event.reason
+
+        );
+
+    }
+
+);
+
+/* ==========================================================
+   END
+========================================================== */
+
+})();      return d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
     } catch {
       return "";
     }
